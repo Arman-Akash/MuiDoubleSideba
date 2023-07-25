@@ -26,8 +26,7 @@ const drawerWidth = 240;
 
 const openedMixin = (theme) => ({
   width: drawerWidth,
-  margin: "0",
-  borderRadius: "0",
+  zIndex: 10000,
   transition: theme.transitions.create("width", {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.enteringScreen,
@@ -52,8 +51,7 @@ const DrawerHeader = styled("div")(({ theme }) => ({
   alignItems: "center",
   justifyContent: "flex-end",
   padding: theme.spacing(0, 1),
-  margin: "0",
-  borderRadius: "0",
+  // zIndex: 10000,
   // necessary for content to be below app bar
   ...theme.mixins.toolbar,
 }));
@@ -61,16 +59,12 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "open",
 })(({ theme, open }) => ({
-  margin: "0",
-  borderRadius: "0",
   zIndex: theme.zIndex.drawer + 1,
   transition: theme.transitions.create(["width", "margin"], {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
   ...(open && {
-    margin: "0",
-    borderRadius: "0",
     marginLeft: drawerWidth,
     width: `calc(100% - ${drawerWidth}px)`,
     transition: theme.transitions.create(["width", "margin"], {
@@ -86,9 +80,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== "open" 
     flexShrink: 0,
     whiteSpace: "nowrap",
     boxSizing: "border-box",
-    margin: "0",
-    borderRadius: "0",
-    zIndex: 10000,
+    // zIndex: 10000,
     ...(open && {
       ...openedMixin(theme),
       "& .MuiDrawer-paper": openedMixin(theme),
@@ -123,22 +115,23 @@ function MiniDrawer({ color, brand, brandName, routes, ...rest }) {
             onClick={handleDrawerOpen}
             edge="start"
             sx={{
-              marginRight: 5,
+              // marginRight: 5,
+              // background: "#fff",
               ...(open && { display: "none" }),
             }}
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap component="div">
+          {/* <Typography variant="h6" noWrap component="div">
             logo
-          </Typography>
+          </Typography> */}
         </Toolbar>
       </AppBar>
-      <Drawer variant="permanent" open={open} sx={{}}>
+      <Drawer variant="permanent" open={open} sx={{ margin: "0px" }}>
         <DrawerHeader>
           {/* {brandName} */}
           <IconButton onClick={handleDrawerClose}>
-            {theme.direction === "rtl" ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+            {open ? theme.direction === "rtl" ? <ChevronRightIcon /> : <ChevronLeftIcon /> : null}
           </IconButton>
         </DrawerHeader>
         <Divider />
