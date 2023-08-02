@@ -47,6 +47,7 @@ import SignUp from "layouts/authentication/sign-up";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
+import Drawer from "layouts/SideDrawer/index";
 
 const routes = [
   {
@@ -56,6 +57,14 @@ const routes = [
     icon: <Icon fontSize="small">dashboard</Icon>,
     route: "/dashboard",
     component: <Dashboard />,
+  },
+  {
+    type: "collapse",
+    name: "Drawer",
+    key: "drawer",
+    icon: <Icon fontSize="small">table_view</Icon>,
+    route: "/drawer",
+    component: <Drawer />,
   },
   {
     type: "collapse",
