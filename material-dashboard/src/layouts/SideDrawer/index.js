@@ -9,6 +9,41 @@ import { Tab } from "../../../node_modules/@mui/icons-material/index";
 import { useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Tabs from "@mui/material/Tabs";
+import MDTypography from "components/MDTypography/index";
+import PropTypes from 'prop-types';
+
+function CustomTabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <MDBox sx={{ p: 3 }}>
+          <MDTypography>{children}</MDTypography>
+        </MDBox>
+      )}
+    </div>
+  );
+}
+
+CustomTabPanel.propTypes = {
+  children: PropTypes.node,
+  index: PropTypes.number.isRequired,
+  value: PropTypes.number.isRequired,
+};
+
+function a11yProps(index) {
+  return {
+    id: `simple-tab-${index}`,
+    'aria-controls': `simple-tabpanel-${index}`,
+  };
+}
 
 const SideDrawer = () => {
   const { columns, rows } = authorsTableData();
@@ -36,36 +71,22 @@ const SideDrawer = () => {
             borderClass="customResizeBorder"
           >
             <div className="sidebar panel">
-              <Grid item xs={12} md={6} lg={4} sx={{ ml: "auto" }}>
-                <AppBar position="static">
-                  <Tabs orientation={tabsOrientation} value={tabValue} onChange={handleSetTabValue}>
-                    <Tab
-                      label="App"
-                      icon={
-                        <Icon fontSize="small" sx={{ mt: -0.25 }}>
-                          home
-                        </Icon>
-                      }
-                    />
-                    <Tab
-                      label="Message"
-                      icon={
-                        <Icon fontSize="small" sx={{ mt: -0.25 }}>
-                          email
-                        </Icon>
-                      }
-                    />
-                    <Tab
-                      label="Settings"
-                      icon={
-                        <Icon fontSize="small" sx={{ mt: -0.25 }}>
-                          settings
-                        </Icon>
-                      }
-                    />
-                  </Tabs>
-                </AppBar>
-              </Grid>
+              <MDBox sx={{ borderBottom: 1, borderColor: "divider" }}>
+                <Tabs value={tabValue} onChange={handleSetTabValue} aria-label="basic tabs example">
+                  <Tab label="Item One" {...a11yProps(0)} />
+                  <Tab label="Item Two" {...a11yProps(1)} />
+                  <Tab label="Item Three" {...a11yProps(2)} />
+                </Tabs>
+              </MDBox>
+              <CustomTabPanel value={tabValue} index={0}>
+                Item One
+              </CustomTabPanel>
+              <CustomTabPanel value={tabValue} index={1}>
+                Item Two
+              </CustomTabPanel>
+              <CustomTabPanel value={tabValue} index={2}>
+                Item Three
+              </CustomTabPanel>
             </div>
           </ResizePanel>
         </div>

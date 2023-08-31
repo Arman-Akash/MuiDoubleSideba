@@ -10,7 +10,7 @@ body {
 }
 
 .panel {
-  display: flex;
+  /* display: flex; */
   justify-content: center;
   align-items: center;
 }
@@ -62,7 +62,7 @@ body {
   width: 100%;
   box-sizing: border-box;
   /* text-align: center; */
-  flex-grow: 1;
+  /* flex-grow: 1; */
 }
 
 .withMargin {
